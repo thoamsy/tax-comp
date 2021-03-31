@@ -35,7 +35,7 @@ const Field = ({
 };
 
 const StatItem = ({ label, value }) => (
-  <div class="w-1/2 h-24 flex flex-col items-center justify-center">
+  <div className="w-1/2 h-24 flex flex-col items-center justify-center">
     <h2 className="text-2xl text-red-500 font-bold">{value}</h2>
     <h4 className="text-gray-400 text-xs">{label}</h4>
   </div>
