@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { taxesWholeYear } from './tax';
 
 const Field = ({
   label,
@@ -32,11 +33,45 @@ const Field = ({
     </label>
   );
 };
+
+const StatItem = ({ label, value }) => (
+  <div class="w-1/2 h-24 flex flex-col items-center justify-center">
+    <h2 className="text-2xl text-red-500 font-bold">{value}</h2>
+    <h4 className="text-gray-400 text-xs">{label}</h4>
+  </div>
+);
+
+const formatter = new Intl.NumberFormat();
+const Stat = ({
+  tax = 0,
+  taxableIncome = 0,
+  pendingTaxRevenue = 0,
+  className = '',
+}) => {
+  return (
+    <div
+      className={`rounded-lg divide-x divide-gray-200 shadow-md flex ${className}`}
+    >
+      <StatItem label="总纳税" value={formatter.format(tax)} />
+      <StatItem
+        label="每月待纳税收入"
+        value={formatter.format(pendingTaxRevenue)}
+      />
+      <StatItem
+        label="全年待纳税收入"
+        value={formatter.format(taxableIncome)}
+      />
+    </div>
+  );
+};
+
 const Form = () => {
   const [formValue, setFormValue] = useState({
     publicReserveFund: 12,
     medicalInsurance: 2.25,
     endowmentInsurance: 8,
+    income: 25000,
+    exempt: 1500,
   });
 
   const onChangeWithKey = (key) => (event) => {
@@ -46,12 +81,20 @@ const Form = () => {
     }));
   };
 
+  const [result, setResult] = useState({
+    tax: 0,
+    taxableIncome: 0,
+    pendingTaxRevenue: 0,
+  });
+
   return (
     <section className="container mx-auto">
       <h2 className="text-2xl font-bold mb-4">个税计算</h2>
+      <Stat {...result} className="mb-4 w-96" />
       <form
         onSubmit={(e) => {
           e.preventDefault();
+          setResult(taxesWholeYear(formValue));
         }}
         className="grid grid-cols-1 gap-4"
       >
