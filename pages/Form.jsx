@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { taxesWholeYear } from './tax';
+import { taxesWholeYear } from '../lib/tax';
 
 const Field = ({
   label,
