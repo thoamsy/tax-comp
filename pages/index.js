@@ -4,13 +4,16 @@ import styles from '../styles/Home.module.css';
 
 export default function Home() {
   return (
-    <div className="dark:bg-black flex flex-col min-h-screen">
+    <div className="dark:bg-black flex flex-col h-screen">
       <Head>
         <title>税务计算小工具</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="py-4 flex items-center justify-center flex-1">
+      <main
+        style={{ flex: 1 }}
+        className="py-4 flex items-center justify-center flex-1"
+      >
         <Form />
       </main>
 
