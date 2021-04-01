@@ -50,15 +50,18 @@ const StatItem = ({ label, value, prevValue = 0 }) => {
       <h2 className="text-lg md:text-2xl dark:text-white text-gray-700 font-bold">
         {formatter.format(value)}
       </h2>
-      <h4 className="text-gray-400 text-sm dark:text-gray-300">
+      <h4 className="flex flex-col md:flex-row justify-around items-center text-gray-400 text-sm dark:text-gray-300">
         {label}
         {showDifference && (
           <span
-            className={
-              needMore
-                ? 'ml-2 text-red-500 dark:text-red-700'
-                : 'ml-2 text-green-300 dark:text-green-600'
-            }
+            className={`
+              ml-2
+              ${
+                needMore
+                  ? ' text-red-500 dark:text-red-700'
+                  : ' text-green-300 dark:text-green-600'
+              }
+              `}
           >
             {icon}
             {difference}
@@ -136,8 +139,8 @@ const Form = () => {
     publicReserveFund: 12,
     endowmentInsurance: 8,
     medicalInsurance: 2.25,
-    income: 25000,
-    exempt: 1500,
+    income: 10000,
+    exempt: 0,
   });
   const prevValue = useRef();
 
@@ -145,7 +148,7 @@ const Form = () => {
     setFormValue((value) => {
       return {
         ...value,
-        [key]: Number(event.target.value),
+        [key]: event.target.value ? Number(event.target.value) : '',
       };
     });
   };
@@ -181,6 +184,7 @@ const Form = () => {
             type="number"
             step="100"
             label="税前收入"
+            required
           />
           <Field
             value={formValue['exempt']}
@@ -188,6 +192,7 @@ const Form = () => {
             type="number"
             step="100"
             label="个税减免"
+            required
           />
           <Field
             value={formValue['publicReserveFund']}
@@ -196,14 +201,18 @@ const Form = () => {
             label="公积金"
             step="1"
             min="5"
+            max="20"
+            required
           />
           <Field
             value={formValue['endowmentInsurance']}
             onChange={onChangeWithKey('endowmentInsurance')}
             type="number"
             label="养老保险"
+            max="10"
             step="0.5"
             min="2"
+            required
           />
           <Field
             value={formValue['medicalInsurance']}
@@ -212,8 +221,10 @@ const Form = () => {
             label="其他"
             step="0.25"
             min="2"
+            max="4"
+            required
           />
-          <button className="mt-3 dark:bg-green-700 dark:active:bg-green-800 bg-green-500 w-full active:bg-green-700 text-white p-2 rounded-md sm:w-32">
+          <button className="mt-3 dark:bg-green-700 bg-green-500 w-full active:bg-green-800 text-white p-2 rounded-md sm:w-32">
             查看
           </button>
         </form>
