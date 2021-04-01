@@ -11,10 +11,7 @@ export default function Home() {
         <meta name="color-scheme" content="dark light" />
       </Head>
 
-      <main
-        style={{ flex: 1 }}
-        className="py-4 flex items-center justify-center flex-1"
-      >
+      <main className="py-4 flex items-center justify-center flex-1">
         <Form />
       </main>
 
