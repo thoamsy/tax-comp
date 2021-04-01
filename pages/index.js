@@ -8,6 +8,7 @@ export default function Home() {
       <Head>
         <title>税务计算小工具</title>
         <link rel="icon" href="/favicon.ico" />
+        <meta name="color-scheme" content="dark light" />
       </Head>
 
       <main
