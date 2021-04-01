@@ -42,7 +42,7 @@ const StatItem = ({ label, value, prevValue = 0 }) => {
   const icon = prevValue ? (value > prevValue ? isUp : isDown) : undefined;
   const needMore = value > prevValue;
 
-  const showDifference = value !== prevValue && prevValue;
+  const showDifference = value !== prevValue && !!prevValue;
   const difference = formatter.format(Math.abs(value - prevValue).toFixed(2));
 
   return (
