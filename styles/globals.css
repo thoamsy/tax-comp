@@ -14,3 +14,9 @@ a {
 * {
   box-sizing: border-box;
 }
+
+@media (prefers-color-scheme: dark) {
+  img {
+    filter: invert();
+  }
+}

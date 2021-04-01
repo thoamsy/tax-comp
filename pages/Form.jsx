@@ -10,7 +10,7 @@ const Field = ({
   ...rest
 }) => {
   const inputClassName =
-    'mt-1 p-2 block w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white dark:focus:bg-gray-400 focus:ring-0 dark:bg-gray-500';
+    'mt-1 p-2 block w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white dark:focus:bg-gray-900 focus:ring-0 dark:bg-gray-800';
   return (
     <label className="block">
       <span className="text-gray-700 dark:text-gray-300">{label}</span>
@@ -47,7 +47,7 @@ const StatItem = ({ label, value, prevValue = 0 }) => {
 
   return (
     <div className="w-1/2 h-32 md:h-24 flex flex-col items-center justify-center">
-      <h2 className="text-lg md:text-2xl  dark:text-white text-gray-700 font-bold">
+      <h2 className="text-lg md:text-2xl dark:text-white text-gray-700 font-bold">
         {formatter.format(value)}
       </h2>
       <h4 className="text-gray-400 text-sm dark:text-gray-300">
@@ -78,7 +78,7 @@ const Stat = ({
 }) => {
   return (
     <div
-      className={`rounded-lg divide-x dark:divide-gray-700 divide-gray-200 shadow-md flex ${className}`}
+      className={`rounded-lg dark:bg-gray-800 dark:border-gray-700 divide-x dark:divide-gray-700 divide-gray-200 shadow-md flex ${className}`}
     >
       <StatItem label="总纳税" prevValue={prev?.tax} value={tax} />
       <StatItem
