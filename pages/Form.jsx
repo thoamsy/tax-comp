@@ -10,10 +10,10 @@ const Field = ({
   ...rest
 }) => {
   const inputClassName =
-    'mt-1 p-2 block w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0';
+    'mt-1 p-2 block w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white dark:focus:bg-gray-400 focus:ring-0 dark:bg-gray-500';
   return (
     <label className="block">
-      <span className="text-gray-700">{label}</span>
+      <span className="text-gray-700 dark:text-gray-300">{label}</span>
       {children ? (
         React.cloneElement(children, {
           className: inputClassName,
@@ -39,24 +39,31 @@ const isDown = '📉';
 
 const formatter = new Intl.NumberFormat();
 const StatItem = ({ label, value, prevValue = 0 }) => {
-  const icons = prevValue ? (value > prevValue ? isUp : isDown) : undefined;
+  const icon = prevValue ? (value > prevValue ? isUp : isDown) : undefined;
   const needMore = value > prevValue;
-  const difference =
-    value !== prevValue && prevValue
-      ? formatter.format(Math.abs(value - prevValue).toFixed(2))
-      : false;
+
+  const showDifference = value !== prevValue && prevValue;
+  const difference = formatter.format(Math.abs(value - prevValue).toFixed(2));
 
   return (
     <div className="w-1/2 h-32 md:h-24 flex flex-col items-center justify-center">
-      <h2 className="text-lg md:text-2xl text-gray-700 font-bold">
+      <h2 className="text-lg md:text-2xl  dark:text-white text-gray-700 font-bold">
         {formatter.format(value)}
       </h2>
-      <h4 className="text-gray-400 text-sm">
+      <h4 className="text-gray-400 text-sm dark:text-gray-300">
         {label}
-        <span className={needMore ? 'text-red-500' : 'text-green-300'}>
-          {icons}
-          {difference}
-        </span>
+        {showDifference && (
+          <span
+            className={
+              needMore
+                ? 'ml-2 text-red-500 dark:text-red-700'
+                : 'ml-2 text-green-300 dark:text-green-600'
+            }
+          >
+            {icon}
+            {difference}
+          </span>
+        )}
       </h4>
     </div>
   );
@@ -71,7 +78,7 @@ const Stat = ({
 }) => {
   return (
     <div
-      className={`rounded-lg divide-x divide-gray-200 shadow-md flex ${className}`}
+      className={`rounded-lg divide-x dark:divide-gray-700 divide-gray-200 shadow-md flex ${className}`}
     >
       <StatItem label="总纳税" prevValue={prev?.tax} value={tax} />
       <StatItem
@@ -152,7 +159,7 @@ const Form = () => {
   return (
     <div className="w-screen px-4">
       <section className=" md:container md:mx-auto md:w-4/6">
-        <h2 className="text-2xl font-bold mb-4">个税计算</h2>
+        <h2 className="text-2xl font-bold mb-4 dark:text-white">个税计算</h2>
         <Stat
           prev={prevValue.current}
           {...result}
@@ -206,7 +213,7 @@ const Form = () => {
             step="0.25"
             min="2"
           />
-          <button className="bg-green-500 w-full active:bg-green-700 text-white p-2 rounded-md sm:w-32">
+          <button className="mt-3 dark:bg-green-700 dark:active:bg-green-800 bg-green-500 w-full active:bg-green-700 text-white p-2 rounded-md sm:w-32">
             查看
           </button>
         </form>
