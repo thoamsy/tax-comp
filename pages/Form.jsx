@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+import isEqual from 'lodash/isEqual';
 import { taxesWholeYear } from '../lib/tax';
 
 const Field = ({
@@ -172,8 +173,11 @@ const Form = () => {
           onSubmit={(e) => {
             e.preventDefault();
             setResult((prev) => {
-              prevValue.current = prev;
-              return taxesWholeYear(formValue);
+              const next = taxesWholeYear(formValue);
+              if (!isEqual(prev, next)) {
+                prevValue.current = prev;
+              }
+              return next;
             });
           }}
           className="grid grid-cols-1 gap-4"
