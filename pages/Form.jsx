@@ -64,8 +64,8 @@ const StatItem = ({ label, value, prevValue = 0 }) => {
               }
               `}
           >
-            {icon}
             {difference}
+            {icon}
           </span>
         )}
       </h4>
@@ -73,22 +73,16 @@ const StatItem = ({ label, value, prevValue = 0 }) => {
   );
 };
 
-const Stat = ({
-  tax = 0,
-  taxableIncome = 0,
-  pendingTaxRevenue = 0,
-  className = '',
-  prev,
-}) => {
+const Stat = ({ tax = 0, incomeAfterTax = 0, className = '', prev }) => {
   return (
     <div
       className={`rounded-lg dark:bg-gray-800 dark:border-gray-700 divide-x dark:divide-gray-700 divide-gray-200 shadow-md flex ${className}`}
     >
       <StatItem label="总纳税" prevValue={prev?.tax} value={tax} />
       <StatItem
-        label="全年待纳税收入"
-        prevValue={prev?.taxableIncome}
-        value={taxableIncome}
+        label="税后收入"
+        prevValue={prev?.incomeAfterTax}
+        value={incomeAfterTax}
       />
     </div>
   );
@@ -157,7 +151,7 @@ const Form = () => {
   const [result, setResult] = useState({
     tax: 0,
     taxableIncome: 0,
-    pendingTaxRevenue: 0,
+    incomeAfterTax: 0,
   });
 
   return (
@@ -186,6 +180,7 @@ const Form = () => {
             value={formValue['income']}
             onChange={onChangeWithKey('income')}
             type="number"
+            min="0"
             step="100"
             label="税前收入"
             required
@@ -195,6 +190,7 @@ const Form = () => {
             onChange={onChangeWithKey('exempt')}
             type="number"
             step="100"
+            min="0"
             label="个税减免"
             required
           />
