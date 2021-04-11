@@ -1,6 +1,6 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import isEqual from 'lodash/isEqual';
-import { taxesWholeYear } from '../lib/tax';
+import { taxesWholeYear, taxesEachMonth } from '../lib/tax';
 
 const Field = ({
   label,
@@ -129,6 +129,21 @@ function useLocalStorage(key, initialValue) {
   return [storedValue, setValue];
 }
 
+const months = [
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec',
+];
+
 const Form = () => {
   const [formValue, setFormValue] = useLocalStorage('formValue', {
     publicReserveFund: 12,
@@ -138,6 +153,42 @@ const Form = () => {
     exempt: 0,
   });
   const prevValue = useRef();
+  const [incomeOfEachMonth, setIncomeOfEachMonth] = useState(() =>
+    Array.from({ length: 12 }).fill(0),
+  );
+
+  const options = useMemo(
+    () => ({
+      darkMode: 'auto',
+      grid: {
+        tooltip: {
+          trigger: 'axis',
+        },
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'shadow',
+        },
+      },
+      xAxis: {
+        type: 'category',
+        data: months,
+      },
+      yAxis: {
+        type: 'value',
+        scale: true,
+      },
+      series: [
+        {
+          data: incomeOfEachMonth,
+          type: 'bar',
+          name: '当月工资',
+        },
+      ],
+    }),
+    [incomeOfEachMonth],
+  );
 
   const onChangeWithKey = (key) => (event) => {
     setFormValue((value) => {
@@ -154,6 +205,22 @@ const Form = () => {
     incomeAfterTax: 0,
   });
 
+  const echartsContainer = useRef();
+  const echartsInstance = useRef();
+
+  useEffect(() => {
+    // 初始化完成
+    if (!echartsInstance.current) {
+      return import('echarts').then((echarts) => {
+        echartsInstance.current = echarts.init(echartsContainer.current);
+        echartsInstance.current.setOption(options);
+      });
+    }
+
+    echartsInstance.current.setOption(options);
+    //  echartsContainer.current
+  }, [incomeOfEachMonth, options]);
+
   return (
     <div className="w-screen px-4">
       <section className=" md:container md:mx-auto md:w-4/6">
@@ -163,11 +230,19 @@ const Form = () => {
           {...result}
           className="mb-4 min-w-full sm:w-full md:w-96"
         />
+        <div
+          ref={echartsContainer}
+          style={{ height: 300 }}
+          className="echarts"
+        />
         <form
           onSubmit={(e) => {
             e.preventDefault();
             setResult((prev) => {
               const next = taxesWholeYear(formValue);
+              setIncomeOfEachMonth(
+                taxesEachMonth(formValue).map((tax) => formValue.income - tax),
+              );
               if (!isEqual(prev, next)) {
                 prevValue.current = prev;
               }
