@@ -9,6 +9,12 @@ export default function Home() {
         <title>税务计算小工具</title>
         <link rel="icon" href="/favicon.ico" />
         <meta name="color-scheme" content="dark light" />
+        <meta property="og:title" content="个税计算" />
+        <meta property="og:image" content="/og-image.png" />
+        <meta
+          property="og:description"
+          content="掌握自己每个月税后收入，做一个明白人"
+        />
       </Head>
 
       <main className="py-4 flex items-center justify-center flex-1">

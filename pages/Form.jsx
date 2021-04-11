@@ -181,8 +181,14 @@ const Form = () => {
         },
         axisLabel: {
           formatter(value) {
-            return value / 1000 + 'K';
+            return (value / 1000).toFixed(1) + 'K';
           },
+        },
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'shadow',
         },
       },
       series: [
