@@ -171,6 +171,8 @@ const Form = () => {
         },
       },
       yAxis: {
+        minInterval: 500,
+        maxInterval: 3000,
         offset: isSmall ? -5 : 0,
         type: 'value',
         scale: true,
