@@ -157,6 +157,9 @@ const Form = () => {
     Array.from({ length: 12 }).fill(0),
   );
 
+  const isSmall =
+    typeof window !== 'undefined' ? window.innerWidth < 500 : false;
+
   const options = useMemo(
     () => ({
       darkMode: 'auto',
@@ -168,16 +171,22 @@ const Form = () => {
         },
       },
       yAxis: {
+        offset: isSmall ? -5 : 0,
         type: 'value',
         scale: true,
         nameTextStyle: {
           fontFamily: 'system-ui',
         },
+        axisLabel: {
+          formatter(value) {
+            return value / 1000 + 'K';
+          },
+        },
       },
       series: [
         {
           label: {
-            show: true,
+            show: !isSmall,
             position: 'top',
             fontFamily: 'system-ui',
           },
@@ -232,8 +241,8 @@ const Form = () => {
         />
         <div
           ref={echartsContainer}
+          className="h-80"
           style={{
-            height: 300,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
