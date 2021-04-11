@@ -160,27 +160,27 @@ const Form = () => {
   const options = useMemo(
     () => ({
       darkMode: 'auto',
-      grid: {
-        tooltip: {
-          trigger: 'axis',
-        },
-      },
-      tooltip: {
-        trigger: 'axis',
-        axisPointer: {
-          type: 'shadow',
-        },
-      },
       xAxis: {
         type: 'category',
         data: months,
+        nameTextStyle: {
+          fontFamily: 'system-ui',
+        },
       },
       yAxis: {
         type: 'value',
         scale: true,
+        nameTextStyle: {
+          fontFamily: 'system-ui',
+        },
       },
       series: [
         {
+          label: {
+            show: true,
+            position: 'top',
+            fontFamily: 'system-ui',
+          },
           data: incomeOfEachMonth,
           type: 'bar',
           name: '当月工资',
@@ -232,9 +232,15 @@ const Form = () => {
         />
         <div
           ref={echartsContainer}
-          style={{ height: 300 }}
-          className="echarts"
-        />
+          style={{
+            height: 300,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          Charts 加载中
+        </div>
         <form
           onSubmit={(e) => {
             e.preventDefault();
