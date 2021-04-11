@@ -27,16 +27,10 @@ export default function Home() {
           href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
           target="_blank"
           rel="noopener noreferrer"
-          className="dark:text-white"
+          className="dark:text-white flex flex-col items-center justify-center"
         >
           Powered by{' '}
-          <Image
-            height="40"
-            width="85"
-            src="/vercel.svg"
-            alt="Vercel Logo"
-            className={styles.logo}
-          />
+          <Image height="16" width="70" src="/vercel.svg" alt="Vercel Logo" />
         </a>
       </footer>
     </div>
