@@ -257,9 +257,7 @@ const Form = () => {
             e.preventDefault();
             setResult((prev) => {
               const next = taxesWholeYear(formValue);
-              setIncomeOfEachMonth(
-                taxesEachMonth(formValue).map((tax) => formValue.income - tax),
-              );
+              setIncomeOfEachMonth(taxesEachMonth(formValue));
               if (!isEqual(prev, next)) {
                 prevValue.current = prev;
               }
